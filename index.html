@@ -117,7 +117,7 @@ function initLeagueStore(){try{const stored=JSON.parse(localStorage.getItem(LEAG
 let leagueStore=initLeagueStore();
 let state=leagueStore.leagues.find(x=>x.id===leagueStore.activeId)?.state||freshState();
 let cloudClient=true,cloudUser=null,cloudReady=false,cloudHydrating=false,cloudWriteTimer=null;
-const FP_API=(window.FANTAPROF_API_URL||location.origin).replace(/\/+$/,'')+'/api',FP_TOKEN_KEY='fantaprof-auth-token';let cloudToken=localStorage.getItem(FP_TOKEN_KEY);
+const FP_API=(window.FANTAPROF_CONFIG?.API_URL||window.FANTAPROF_API_URL||location.origin).replace(/\/+$/,'')+'/api',FP_TOKEN_KEY='fantaprof-auth-token';let cloudToken=localStorage.getItem(FP_TOKEN_KEY);
 function cloudClearSession(){cloudToken=null;localStorage.removeItem(FP_TOKEN_KEY);cloudUser=null;cloudReady=false;setCloudControls()}
 async function cloudApi(path,opts={}){const headers={'Content-Type':'application/json'};if(cloudToken)headers.Authorization='Bearer '+cloudToken;const res=await fetch(FP_API+path,{...opts,headers});const data=await res.json().catch(()=>({}));if(res.status===401&&cloudToken&&!path.startsWith('/auth/login')){cloudClearSession();throw new Error('Sessione scaduta, accedi di nuovo.')}if(!res.ok){const d=data.detail;throw new Error(typeof d==='string'?d:(Array.isArray(d)&&d[0]?.msg)||'Richiesta non riuscita')}return data}
 function cloudMessage(message){const el=document.querySelector('#cloudMessage');if(el)el.textContent=message}
