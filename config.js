@@ -1,3 +1,2 @@
-window.FANTAPROF_CONFIG = {
-  API_URL: "https://fantaprof-api.onrender.com"
-};
+// Sostituisci con l'URL HTTPS pubblico del backend dopo il deploy.
+window.FANTAPROF_API_URL = 'https://INSERISCI-URL-BACKEND';
